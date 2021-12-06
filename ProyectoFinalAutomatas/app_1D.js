@@ -6,7 +6,7 @@ const ctx2 = canvas2.getContext("2d");
 const ctx3 = canvas3.getContext("2d");
 const ruleLabel = document.getElementById("ruleNo");
 const ruleSlider = document.getElementById("slider");
-const instruments = []
+const instruments = [];
 const width = canvas.clientWidth;
 const height = canvas.clientHeight;
 const cellW = 4;
@@ -15,8 +15,15 @@ let ruleNo = 0;
 
 function getSelectedArray() {
   const selectedValue = document.getElementById("list").value;
-  instruments.push(selectedValue)
+
+  if (instruments.length >= 3) {
+    alert("Solo puedes seleccionar 3 instrumentos.")
+    return;
+  }
+
+  instruments.push(selectedValue);
 }
+
 const toBinary = (no) => {
   return ("00000000" + (no >>> 0).toString(2)).slice(-8);
 };
@@ -104,16 +111,33 @@ ruleSlider.oninput = ruleSlider.onkeydown = () => {
       for (let i = 0; i < ruleset.length; i++) {
         suma += parseInt(ruleset[i])
       }
-      if (suma > 0) {
-        console.log("rulest", ruleset);
-        for (let i = 0; i < ruleset.length; i++) {
 
+      if (suma <= 0) {
+        return;
+      }
+
+      console.log("rulest", ruleset);
+      for (let i = 0; i < instruments.length; i++) {
+        const instrument = instruments[i];
+
+        for (let j = 0; j < ruleset.length; j++) {
+          const version = parseInt(ruleset[i]) + 1;
+          playSound(instrument, version)
         }
       }
+
       run();
     };
   }
 };
+
+async function playSound(instrument, version) {
+  instrument = String(instrument).toLowerCase();
+  version = String(version);
+
+  var audio = new Audio('./sonidos/'+instrument+version+'.mp3');
+  audio.play();
+}
 
 ruleSlider.onmousedown = onkeydown = () => {
   ctx.clearRect(0, 0, width, height);
