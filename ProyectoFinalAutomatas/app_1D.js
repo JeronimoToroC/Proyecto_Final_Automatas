@@ -121,7 +121,7 @@ ruleSlider.oninput = ruleSlider.onkeydown = () => {
         const instrument = instruments[i];
 
         for (let j = 0; j < ruleset.length; j++) {
-          const version = parseInt(ruleset[i]) + 1;
+          const version = parseInt(ruleset[j]) + 1;
           playSound(instrument, version)
         }
       }
@@ -132,6 +132,7 @@ ruleSlider.oninput = ruleSlider.onkeydown = () => {
 };
 
 async function playSound(instrument, version) {
+  console.log("playing: ...", instrument, version);
   instrument = String(instrument).toLowerCase();
   version = String(version);
 
