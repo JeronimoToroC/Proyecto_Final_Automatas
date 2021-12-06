@@ -5,47 +5,34 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>1D</title>
+    <link href="./style.css" rel="stylesheet" type="text/css">
   </head>
-  <style>
-    html,
-    body {
-      margin: 0;
-      padding: 0;
-      background-color: #cccccc;
-      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-    }
-    .canvas {
-      background-color: white;
-      border: 1px solid black;
-      width:50%;
-      height:50%;
-      margin-left: 8rem;
-      margin-top: 8rem;
-      overflow-x: auto;
-      overflow-y: auto;
-    }
-
-    .main {
-      display: grid;
-      grid-template-columns: repeat(2, 3fr);
-      display:flex;
-      width:100%;
-      height:1000px;
-      flex-wrap: nowrap;
-    }
-
-    #slider {
-      appearance: none;
-      width: 70%;
-    }
-  </style>
   <body>
     <main class="main">
-      <canvas class="canvas" id="canvas"></canvas>
-      <div>
+      <div class="forms">
         <h2>Rule: <strong id="ruleNo">0</strong></h1>
-        <input type="range" name="slider" id="slider" min="0" max="255" value="0" />
+          <label>Seleccione los instrumentos<label>
+          <select id="list" onchange="getSelectedArray();">
+            <option value="trompeta">Trompeta</option>
+            <option value="guitarra">Guitarra</option>
+            <option value="piano">Piano</option>
+            <option value="bajo">Bajo</option>
+            <option value="tambor">tambor</option>
+            <option value="pandereta">pandereta</option>
+            <option value="violin">violín</option>
+            <option value="tuba">tuba</option>
+            <option value="saxo">Saxofón</option>
+            <option value="electrica">guitarra eléctrica</option>
+          </select>
+          <div class="inputForm">
+            <label href="slider">Ingrese un valor para la regla<label>
+              <input type="number" name="slider" id="slider" min="0" max="255"  placeholder="Ingrese un valor" />
+          </div>
+        </br>
       </div>
+      <canvas class="canvas" id="canvas" width="400px" height="400px"></canvas>
+      <canvas class="canvas" id="canvas2" width="400px" height="400px"></canvas>
+      <canvas class="canvas" id="canvas3" width="400px" height="400px"></canvas>
     </main>
   </body>
   <script src="./app_1D.js"></script>
