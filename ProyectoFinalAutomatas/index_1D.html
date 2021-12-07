@@ -4,33 +4,41 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>1D</title>
+    <title>Proyecto Autómatas</title>
     <link href="./style.css" rel="stylesheet" type="text/css">
   </head>
   <body>
     <main class="main">
       <div class="forms">
-        <h1>Rule: <strong id="ruleNo">0</strong></h1>
-        <div>
-          <label>Elementos seleccionados: </label>
-          <p id="selectedInstruments"></p>
+
+        <div class="data">
+          <div class="h2p">
+            <h2><strong>Rule: </strong></h2>
+            <p id="ruleNo">0</p>
+          </div>
+          <div>
+            <h2><strong>Elementos seleccionados: </strong></h2>
+            <p id="selectedInstruments"></p>
+          </div>
+          <div class="h2p">
+            <h2><strong>Estado: </strong></h2>
+            <p id="ruleset"></p>
+          </div>
         </div>
-          <label>Seleccione los instrumentos<label>
+
+        <div class="inputs">
+          <label>Seleccione los instrumentos</label>
           <select id="list" onchange="getSelectedArray();">
             <option value="" selected disabled>-</option>
           </select>
-          <button onclick="selectInstrumentsRandom();">Seleccionar aleatoriamente</button>
-
-
-          <div class="inputForm">
-            <label href="slider">Ingrese un valor para la regla<label>
-              <input type="number" name="slider" id="slider" min="0" max="255"  placeholder="Ingrese un valor" />
-              <button onclick="play();">Play!</button>
-          </div>
         </br>
-      </div>
-      <div>
-        <h2 id="ruleset"></h2>
+          <button onclick="selectInstrumentsRandom();">Seleccionar aleatoriamente</button>
+      </br>
+            <label class="labelRule">Ingrese un valor para la regla</label>
+              <input type="number" name="slider" id="slider" min="0" max="255"  placeholder="Ingrese un valor" />
+                <button onclick="play();">Play!</button>
+        </div>
+
       </div>
       <canvas class="canvas" id="canvas" width="400px" height="400px"></canvas>
       <canvas class="canvas" id="canvas2" width="400px" height="400px"></canvas>
