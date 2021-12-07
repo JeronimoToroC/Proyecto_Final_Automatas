@@ -142,9 +142,11 @@ function play() {
 
   for (let j = 0; j < ruleset.length; j++) {
     for (let i = 0; i < instruments.length; i++) {
-      const instrument = instruments[i];
-      const version = parseInt(ruleset[j]) + 1;
-      playSound(instrument, version);
+      setInterval(() => {
+        const instrument = instruments[i];
+        const version = parseInt(ruleset[j]) + 1;
+        playSound(instrument, version);
+      }, 2000);
     }
   }
 
