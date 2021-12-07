@@ -79,16 +79,22 @@ const generate = () => {
   generation++;
 };
 
-const draw = (color) => {
+let colours = {
+  "canvas1": ["green", "chartreuse"],
+  "canvas2": ["gold", "maroon"],
+  "canvas3": ["red", "violet"],
+};
+
+const draw = (rulesetPos) => {
   for (let i = 0; i < cells.length; i++) {
     if (cells[i] == 1) {
-      ctx.fillStyle = "green";
+      ctx.fillStyle = colours.canvas1[rulesetPos];
       ctx.fillRect(cellW * i, generation * cellW, cellW, cellW);
 
-      ctx2.fillStyle = "black";
+      ctx2.fillStyle = colours.canvas2[rulesetPos];
       ctx2.fillRect(cellW * i, generation * cellW, cellW, cellW);
 
-      ctx3.fillStyle = "red";
+      ctx3.fillStyle = colours.canvas3[rulesetPos];
       ctx3.fillRect(cellW * i, generation * cellW, cellW, cellW);
     } else {
       continue;
@@ -96,12 +102,19 @@ const draw = (color) => {
   }
 };
 
-const run = (color) => {
+const run = (ruleset) => {
+  let i = 0;
+
   while (generation < height / cellW) {
-    draw(color);
+    draw(ruleset[i]);
     generate();
+
+    if ((generation % 12.5) == 0) {
+      i++;
+    }
   }
 };
+
 function play() {
   if (ruleSlider.value > 255) {
     alert("Ingrese un valor entre 0 y 255")
@@ -135,7 +148,7 @@ function play() {
     }
   }
 
-  run();
+  run(ruleset);
 };
 
 async function playSound(instrument, version) {
