@@ -10,26 +10,27 @@
   <body>
     <main class="main">
       <div class="forms">
-        <h2>Rule: <strong id="ruleNo">0</strong></h1>
+        <h1>Rule: <strong id="ruleNo">0</strong></h1>
+        <div>
+          <label>Elementos seleccionados: </label>
+          <p id="selectedInstruments"></p>
+        </div>
           <label>Seleccione los instrumentos<label>
           <select id="list" onchange="getSelectedArray();">
             <option value="" selected disabled>-</option>
-            <option value="trompeta">Trompeta</option>
-            <option value="guitarra">Guitarra</option>
-            <option value="piano">Piano</option>
-            <option value="bajo">Bajo</option>
-            <option value="tambor">tambor</option>
-            <option value="pandereta">pandereta</option>
-            <option value="violin">violín</option>
-            <option value="tuba">tuba</option>
-            <option value="saxo">Saxofón</option>
-            <option value="electrica">guitarra eléctrica</option>
           </select>
+          <button onclick="selectInstrumentsRandom();">Seleccionar aleatoriamente</button>
+
+
           <div class="inputForm">
             <label href="slider">Ingrese un valor para la regla<label>
               <input type="number" name="slider" id="slider" min="0" max="255"  placeholder="Ingrese un valor" />
+              <button onclick="play();">Play!</button>
           </div>
         </br>
+      </div>
+      <div>
+        <h2 id="ruleset"></h2>
       </div>
       <canvas class="canvas" id="canvas" width="400px" height="400px"></canvas>
       <canvas class="canvas" id="canvas2" width="400px" height="400px"></canvas>

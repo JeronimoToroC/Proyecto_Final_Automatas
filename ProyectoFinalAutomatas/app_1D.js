@@ -1,3 +1,4 @@
+const allInstruments = ["trompeta","guitarra","piano","bajo","tambor","pandereta","violin","tuba","saxo","electrica"];
 const canvas = document.getElementById("canvas");
 const canvas2 = document.getElementById("canvas2");
 const canvas3 = document.getElementById("canvas3");
@@ -6,12 +7,20 @@ const ctx2 = canvas2.getContext("2d");
 const ctx3 = canvas3.getContext("2d");
 const ruleLabel = document.getElementById("ruleNo");
 const ruleSlider = document.getElementById("slider");
-const instruments = [];
 const width = canvas.clientWidth;
 const height = canvas.clientHeight;
 const cellW = 4;
 
+let instruments = [];
 let ruleNo = 0;
+
+window.addEventListener("DOMContentLoaded", function() {
+  const insturmentsSelect = document.getElementById("list");
+
+  allInstruments.forEach(instrument => {
+    insturmentsSelect.add(new Option(instrument, instrument));
+  });
+}, false);
 
 function getSelectedArray() {
   const selectedValue = document.getElementById("list").value;
@@ -22,6 +31,7 @@ function getSelectedArray() {
   }
 
   instruments.push(selectedValue);
+  document.getElementById("selectedInstruments").innerHTML = String(instruments)
 }
 
 const toBinary = (no) => {
@@ -69,7 +79,7 @@ const generate = () => {
   generation++;
 };
 
-const draw = () => {
+const draw = (color) => {
   for (let i = 0; i < cells.length; i++) {
     if (cells[i] == 1) {
       ctx.fillStyle = "green";
@@ -86,58 +96,55 @@ const draw = () => {
   }
 };
 
-const run = () => {
+const run = (color) => {
   while (generation < height / cellW) {
-    draw();
+    draw(color);
     generate();
   }
 };
-
-ruleSlider.oninput = ruleSlider.onkeydown = () => {
+function play() {
   if (ruleSlider.value > 255) {
     alert("Ingrese un valor entre 0 y 255")
     return
-  } else {
-    ruleNo = ruleSlider.value;
-    ruleLabel.innerHTML = ruleNo;
-
-    ruleSlider.onmouseup = onkeyup = () => {
-      cells = initCells(new Array(Math.round(width / cellW)));
-      ruleset = generateRulesetFromBinary(toBinary(ruleNo));
-      generation = 0;
-      suma = 0
-      console.log("ruleNo", ruleNo);
-      console.log("Jeronimo ", instruments)
-      for (let i = 0; i < ruleset.length; i++) {
-        suma += parseInt(ruleset[i])
-      }
-
-      if (suma <= 0) {
-        return;
-      }
-
-      console.log("rulest", ruleset);
-      for (let i = 0; i < instruments.length; i++) {
-        const instrument = instruments[i];
-
-        for (let j = 0; j < ruleset.length; j++) {
-          const version = parseInt(ruleset[j]) + 1;
-          playSound(instrument, version)
-        }
-      }
-
-      run();
-    };
   }
+
+  ruleNo = ruleSlider.value;
+  ruleLabel.innerHTML = ruleNo;
+
+  cells = initCells(new Array(Math.round(width / cellW)));
+  ruleset = generateRulesetFromBinary(toBinary(ruleNo));
+  generation = 0;
+  suma = 0
+  console.log("ruleNo", ruleNo);
+  console.log("Jeronimo ", instruments)
+  for (let i = 0; i < ruleset.length; i++) {
+    suma += parseInt(ruleset[i])
+  }
+
+  if (suma <= 0) {
+    return;
+  }
+
+  drawRuleset(ruleset);
+
+  for (let j = 0; j < ruleset.length; j++) {
+    for (let i = 0; i < instruments.length; i++) {
+      const instrument = instruments[i];
+      const version = parseInt(ruleset[j]) + 1;
+      playSound(instrument, version);
+    }
+  }
+
+  run();
 };
 
 async function playSound(instrument, version) {
-  console.log("playing: ...", instrument, version);
   instrument = String(instrument).toLowerCase();
   version = String(version);
 
   var audio = new Audio('./sonidos/'+instrument+version+'.mp3');
-  audio.play();
+
+  return audio.play();
 }
 
 ruleSlider.onmousedown = onkeydown = () => {
@@ -145,3 +152,27 @@ ruleSlider.onmousedown = onkeydown = () => {
   ctx2.clearRect(0, 0, width, height);
   ctx3.clearRect(0, 0, width, height);
 };
+
+
+function drawRuleset(ruleset) {
+  document.getElementById("ruleset").innerHTML = ruleset;
+}
+
+function getRandom (list) {
+  return list[Math.floor((Math.random()*list.length))];
+}
+
+function setSelectedInstruments(list) {
+  instruments = list;
+  document.getElementById("selectedInstruments").innerHTML = String(instruments)
+}
+
+function selectInstrumentsRandom() {
+  let tempInstruments = Array(getRandom(allInstruments));
+  tempInstruments.push(getRandom(allInstruments))
+  tempInstruments.push(getRandom(allInstruments))
+
+  tempInstruments = tempInstruments.slice(0, 3);
+
+  setSelectedInstruments(tempInstruments);
+}
